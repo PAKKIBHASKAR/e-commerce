@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Sign Up</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div class="container">
+
+    <h2>Create Account</h2>
+
+    <input type="text" id="name" placeholder="Name">
+
+    <input type="email" id="email" placeholder="Email">
+
+    <input type="password" id="password" placeholder="Password">
+
+    <button onclick="signup()">Sign Up</button>
+
+    <p id="message"></p>
+
+    <p>
+        Already have an account?
+        <a href="index.html">Login</a>
+    </p>
+
+</div>
+
+<script>
+
+async function signup() {
+
+    const name = document.getElementById("name").value;
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
+
+    const response = await fetch("/signup", {
+
+        method: "POST",
+
+        headers: {
+            "Content-Type": "application/json"
+        },
+
+        body: JSON.stringify({
+            name,
+            email,
+            password
+        })
+
+    });
+
+    const data = await response.json();
+
+    document.getElementById("message").innerText = data.message;
+
+    if (response.ok) {
+        setTimeout(() => {
+            window.location.href = "index.html";
+        }, 1000);
+    }
+}
+
+</script>
+
+</body>
+</html>
